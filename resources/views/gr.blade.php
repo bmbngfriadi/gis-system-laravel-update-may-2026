@@ -2,39 +2,42 @@
 
 <div id="view-gr" class="space-y-6 animate-slide-up">
 
-    <!-- Insights / Marquee -->
     <div id="gr-insights" class="hidden bg-gradient-to-r from-teal-900 to-emerald-800 rounded-2xl shadow-md p-3 flex items-center text-white overflow-hidden relative">
         <div class="font-black text-[10px] uppercase tracking-widest whitespace-nowrap pr-4 mr-2 border-r border-white/20 flex items-center gap-2 z-10"><i class="fas fa-chart-line text-emerald-400 animate-pulse text-sm"></i> <span data-translate="true">Top Received</span></div>
         <div class="scrolling-text-container text-xs font-medium opacity-90 cursor-default" id="gr-top-items" title="Hover to pause"></div>
     </div>
 
-    <!-- Title & Toolbar (Filter & Search) -->
     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
         <div><h2 class="text-lg font-bold text-slate-700">Good Receive History</h2><p class="text-xs text-slate-500">Log of incoming items to warehouse.</p></div>
 
         <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto items-center">
 
-            <!-- Tombol Filter Tanggal Interaktif GR -->
             <div class="relative w-full sm:w-auto h-full">
                 <button type="button" onclick="toggleDateFilterGr(event)" class="h-[46px] w-full sm:w-auto bg-white border border-slate-300 text-slate-600 hover:text-teal-600 px-4 rounded-xl text-sm font-bold shadow-sm hover:bg-teal-50 hover:border-teal-200 transition-all flex items-center justify-center gap-2 btn-animated">
                     <i class="fas fa-filter"></i>
                     <span data-translate="true">Filter</span>
-                    <!-- Indikator Dot Hijau/Teal jika filter tanggal aktif -->
                     <span id="filter-dot-gr" class="hidden w-2 h-2 rounded-full bg-teal-500 ml-1 shadow-sm"></span>
                 </button>
 
-                <!-- Dropdown Filter Tanggal -->
-                <div id="date-filter-dropdown-gr" class="hidden absolute top-full right-0 mt-2 w-full sm:w-60 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 p-4 animate-slide-up origin-top-right">
+                <div id="date-filter-dropdown-gr" class="hidden absolute top-full right-0 mt-2 w-full sm:w-72 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 p-4 animate-slide-up origin-top-right">
                     <div class="flex justify-between items-center mb-3">
-                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-wider" data-translate="true">Pilih Tanggal</label>
+                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-wider" data-translate="true">Filter Tanggal</label>
                         <button onclick="toggleDateFilterGr(event)" class="text-slate-400 hover:text-teal-500 transition"><i class="fas fa-times text-sm"></i></button>
                     </div>
-                    <input type="date" id="filter-date-gr" onchange="filterGR()" class="w-full border border-slate-300 rounded-xl p-3 text-sm outline-none focus:ring-2 focus:ring-teal-500 mb-3 text-slate-700 font-medium cursor-pointer shadow-sm">
-                    <button onclick="clearDateFilterGr()" class="w-full bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 btn-animated"><i class="fas fa-eraser"></i> <span data-translate="true">Clear Filter</span></button>
+                    <div class="grid grid-cols-2 gap-2 mb-3">
+                        <div>
+                            <label class="block text-[9px] font-bold text-slate-500 mb-1" data-translate="true">Dari (From)</label>
+                            <input type="date" id="filter-date-start-gr" onchange="filterGR()" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-teal-500 text-slate-700 font-medium cursor-pointer shadow-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-bold text-slate-500 mb-1" data-translate="true">Sampai (Until)</label>
+                            <input type="date" id="filter-date-end-gr" onchange="filterGR()" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-teal-500 text-slate-700 font-medium cursor-pointer shadow-sm">
+                        </div>
+                    </div>
+                    <button onclick="clearDateFilterGr()" class="w-full bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 btn-animated"><i class="fas fa-eraser"></i> <span data-translate="true">Clear Filter</span></button>
                 </div>
             </div>
 
-            <!-- Search Bar -->
             <div class="relative w-full sm:w-64 h-[46px]">
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                     <i class="fas fa-search text-slate-400 text-sm"></i>
@@ -42,14 +45,12 @@
                 <input type="text" id="search-gr" onkeyup="filterGR()" class="h-full w-full border border-slate-300 rounded-xl py-2 pl-10 pr-3 text-sm outline-none focus:ring-2 focus:ring-teal-500 shadow-sm transition" data-translate-ph="true" placeholder="Search GR...">
             </div>
 
-            <!-- Button New Form -->
             @if($isAdmin || in_array('gr_submit', $rights))
             <button onclick="openGrModal()" class="h-[46px] w-full sm:w-auto bg-teal-600 text-white px-5 rounded-xl text-sm font-bold shadow-md hover:bg-teal-700 btn-animated flex justify-center items-center whitespace-nowrap"><i class="fas fa-plus mr-2"></i> <span>New GR Form</span></button>
             @endif
         </div>
     </div>
 
-    <!-- Data Table -->
     <div class="bg-transparent sm:bg-white sm:rounded-2xl sm:shadow-sm sm:border sm:border-slate-200 overflow-hidden">
         <div id="gr-card-container" class="md:hidden flex flex-col gap-4"></div>
         <div class="hidden md:block overflow-x-auto">
@@ -63,7 +64,6 @@
     </div>
 </div>
 
-<!-- Modal Form GR -->
 <div id="modal-gr" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[80] flex items-center justify-center p-2 sm:p-4" onclick="closeAllDropdowns(event)">
     <div class="bg-white rounded-3xl w-full max-w-5xl shadow-2xl flex flex-col max-h-[95vh] animate-slide-up overflow-hidden">
         <div class="bg-slate-50 px-6 py-5 border-b border-slate-200 flex justify-between items-center flex-none rounded-t-3xl"><h3 class="font-bold text-slate-800 tracking-tight"><i class="fas fa-truck-loading text-teal-600 mr-2 text-lg"></i> <span data-translate="true" data-i18n="form_gr">Form Good Receive (GR)</span></h3><button onclick="closeModal('modal-gr')" class="text-slate-400 hover:text-red-500 transition"><i class="fas fa-times text-xl"></i></button></div>
@@ -123,7 +123,8 @@
     }
 
     function clearDateFilterGr() {
-        document.getElementById('filter-date-gr').value = '';
+        document.getElementById('filter-date-start-gr').value = '';
+        document.getElementById('filter-date-end-gr').value = '';
         document.getElementById('date-filter-dropdown-gr').classList.add('hidden');
         filterGR();
     }
@@ -140,24 +141,29 @@
 
     function filterGR() {
         const term = document.getElementById('search-gr').value.toLowerCase();
-        const filterDate = document.getElementById('filter-date-gr').value;
+        const startDate = document.getElementById('filter-date-start-gr').value;
+        const endDate = document.getElementById('filter-date-end-gr').value;
 
         // Atur Indikator Dot pada tombol Filter
-        if (filterDate) document.getElementById('filter-dot-gr').classList.remove('hidden');
+        if (startDate || endDate) document.getElementById('filter-dot-gr').classList.remove('hidden');
         else document.getElementById('filter-dot-gr').classList.add('hidden');
 
         // Pencarian Teks
         let filtered = grData.filter(r => (r.gr_id || '').toLowerCase().includes(term) || (r.fullname || '').toLowerCase().includes(term) || (r.remarks || '').toLowerCase().includes(term) || (r.erp_gr_no || '').toLowerCase().includes(term));
 
-        // Pencarian Tanggal
-        if (filterDate) {
+        // Pencarian Tanggal (Rentang Waktu)
+        if (startDate || endDate) {
             filtered = filtered.filter(r => {
                 if(!r.created_at) return false;
                 const cleanDt = typeof r.created_at === 'string' ? r.created_at.replace('Z', '') : r.created_at;
                 const d = new Date(cleanDt);
                 if(isNaN(d)) return false;
                 const rDateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-                return rDateStr === filterDate;
+
+                let pass = true;
+                if(startDate && rDateStr < startDate) pass = false;
+                if(endDate && rDateStr > endDate) pass = false;
+                return pass;
             });
         }
 

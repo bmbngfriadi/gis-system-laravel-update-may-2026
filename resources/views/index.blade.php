@@ -10,7 +10,6 @@
 
 <div id="view-gi" class="space-y-6 animate-slide-up">
 
-    <!-- Insights / Marquee -->
     <div id="gi-insights" class="hidden bg-gradient-to-r from-red-900 to-slate-800 rounded-2xl shadow-md p-3 flex items-center text-white overflow-hidden relative border border-red-800">
         <div class="font-black text-[10px] uppercase tracking-widest whitespace-nowrap pr-4 mr-2 border-r border-white/20 flex items-center gap-2 z-10">
             <i class="fas fa-fire text-orange-400 animate-pulse text-sm"></i> <span data-translate="true">Top Issued</span>
@@ -18,7 +17,6 @@
         <div class="scrolling-text-container text-xs font-medium opacity-90 cursor-default" id="gi-top-items" title="Hover to pause"></div>
     </div>
 
-    <!-- Status Cards -->
     <div class="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
         <div id="card-gi-all" onclick="setGiFilter('All')" class="card-filter card-filter-active bg-gradient-to-br from-blue-500 to-indigo-600 p-4 rounded-2xl shadow-lg flex items-center gap-3 relative group shine-effect text-white"><div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm z-10"><i class="fas fa-list"></i></div><div class="z-10"><div class="text-[8px] font-bold text-blue-100 uppercase tracking-wider mb-0.5" data-translate="true" data-i18n="stat_tot_gi">Total Request</div><div class="text-xl font-black" id="stat-total">0</div></div></div>
         <div id="card-gi-pending" onclick="setGiFilter('Pending Head')" class="card-filter bg-gradient-to-br from-amber-400 to-orange-500 p-4 rounded-2xl shadow-lg flex items-center gap-3 relative group shine-effect text-white bg-live-gradient"><div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm z-10"><i class="fas fa-user-clock"></i></div><div class="z-10"><div class="text-[8px] font-bold text-amber-100 uppercase tracking-wider mb-0.5" data-translate="true" data-i18n="stat_pend_head">Pending Head</div><div class="text-xl font-black" id="stat-pending-head">0</div></div></div>
@@ -27,7 +25,6 @@
         <div id="card-gi-done" onclick="setGiFilter('Completed')" class="card-filter bg-gradient-to-br from-emerald-500 to-teal-600 p-4 rounded-2xl shadow-lg flex items-center gap-3 relative group shine-effect text-white"><div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm z-10"><i class="fas fa-check-double"></i></div><div class="z-10"><div class="text-[8px] font-bold text-emerald-100 uppercase tracking-wider mb-0.5" data-translate="true" data-i18n="stat_comp">Completed</div><div class="text-xl font-black" id="stat-done">0</div></div></div>
     </div>
 
-    <!-- Title & Toolbar (Filter & Search) -->
     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
         <div>
             <h2 class="text-lg font-bold text-slate-700" data-translate="true" data-i18n="hist_gi">Good Issue History</h2>
@@ -36,27 +33,32 @@
 
         <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto items-center">
 
-            <!-- Tombol Filter Tanggal Interaktif -->
             <div class="relative w-full sm:w-auto h-full">
                 <button type="button" onclick="toggleDateFilter(event)" class="h-[46px] w-full sm:w-auto bg-white border border-slate-300 text-slate-600 hover:text-red-600 px-4 rounded-xl text-sm font-bold shadow-sm hover:bg-red-50 hover:border-red-200 transition-all flex items-center justify-center gap-2 btn-animated">
                     <i class="fas fa-filter"></i>
                     <span data-translate="true">Filter</span>
-                    <!-- Indikator Dot Merah jika filter tanggal aktif -->
                     <span id="filter-dot" class="hidden w-2 h-2 rounded-full bg-red-500 ml-1 shadow-sm"></span>
                 </button>
 
-                <!-- Dropdown Filter Tanggal -->
-                <div id="date-filter-dropdown" class="hidden absolute top-full right-0 mt-2 w-full sm:w-60 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 p-4 animate-slide-up origin-top-right">
+                <div id="date-filter-dropdown" class="hidden absolute top-full right-0 mt-2 w-full sm:w-72 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 p-4 animate-slide-up origin-top-right">
                     <div class="flex justify-between items-center mb-3">
-                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-wider" data-translate="true">Pilih Tanggal</label>
+                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-wider" data-translate="true">Filter Tanggal</label>
                         <button onclick="toggleDateFilter(event)" class="text-slate-400 hover:text-red-500 transition"><i class="fas fa-times text-sm"></i></button>
                     </div>
-                    <input type="date" id="filter-date-gi" onchange="filterGI()" class="w-full border border-slate-300 rounded-xl p-3 text-sm outline-none focus:ring-2 focus:ring-red-500 mb-3 text-slate-700 font-medium cursor-pointer shadow-sm">
-                    <button onclick="clearDateFilter()" class="w-full bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 btn-animated"><i class="fas fa-eraser"></i> <span data-translate="true">Clear Filter</span></button>
+                    <div class="grid grid-cols-2 gap-2 mb-3">
+                        <div>
+                            <label class="block text-[9px] font-bold text-slate-500 mb-1" data-translate="true">Dari (From)</label>
+                            <input type="date" id="filter-date-start-gi" onchange="filterGI()" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-red-500 text-slate-700 font-medium cursor-pointer shadow-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-bold text-slate-500 mb-1" data-translate="true">Sampai (Until)</label>
+                            <input type="date" id="filter-date-end-gi" onchange="filterGI()" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-red-500 text-slate-700 font-medium cursor-pointer shadow-sm">
+                        </div>
+                    </div>
+                    <button onclick="clearDateFilter()" class="w-full bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 btn-animated"><i class="fas fa-eraser"></i> <span data-translate="true">Clear Filter</span></button>
                 </div>
             </div>
 
-            <!-- Search Bar -->
             <div class="relative w-full sm:w-64 h-[46px]">
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                     <i class="fas fa-search text-slate-400 text-sm"></i>
@@ -64,14 +66,12 @@
                 <input type="text" id="search-gi" onkeyup="filterGI()" class="h-full w-full border border-slate-300 rounded-xl py-2 pl-10 pr-3 text-sm outline-none focus:ring-2 focus:ring-red-500 shadow-sm transition" data-translate-ph="true" data-i18n-ph="ph_search_gi" placeholder="Search GI...">
             </div>
 
-            <!-- Tombol New GI Form -->
             @if($isAdmin || in_array('gi_submit', $rights))
             <button id="btn-create-gi" onclick="openGiModal()" class="h-[46px] w-full sm:w-auto bg-red-600 text-white px-5 rounded-xl text-sm font-bold shadow-md hover:bg-red-700 btn-animated flex items-center justify-center whitespace-nowrap"><i class="fas fa-plus mr-2"></i> <span data-translate="true" data-i18n="btn_new_gi">New GI Form</span></button>
             @endif
         </div>
     </div>
 
-    <!-- Data Table -->
     <div class="bg-transparent sm:bg-white sm:rounded-2xl sm:shadow-sm sm:border sm:border-slate-200 overflow-hidden">
         <div id="gi-card-container" class="md:hidden flex flex-col gap-4"></div>
         <div class="hidden md:block overflow-x-auto">
@@ -85,7 +85,6 @@
     </div>
 </div>
 
-<!-- Modal Form GI -->
 <div id="modal-gi" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[80] flex items-center justify-center p-2 sm:p-4" onclick="closeAllDropdowns(event)">
     <div class="bg-white rounded-3xl w-full max-w-5xl shadow-2xl flex flex-col max-h-[95vh] animate-slide-up overflow-hidden">
         <div class="bg-slate-50 px-6 py-5 border-b border-slate-200 flex justify-between items-center flex-none rounded-t-3xl"><h3 class="font-bold text-slate-800 tracking-tight"><i class="fas fa-file-invoice text-red-600 mr-2 text-lg"></i> <span id="modal-gi-title" data-translate="true" data-i18n="form_gi">Form Good Issue</span></h3><button onclick="closeModal('modal-gi')" class="text-slate-400 hover:text-red-500 transition"><i class="fas fa-times text-xl"></i></button></div>
@@ -105,7 +104,6 @@
     </div>
 </div>
 
-<!-- Modal Reject -->
 <div id="modal-reject" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[80] flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl animate-slide-up overflow-hidden">
         <div class="bg-red-50 px-6 py-5 border-b border-red-100 flex justify-between items-center"><h3 class="font-bold text-red-700 tracking-tight"><i class="fas fa-times-circle mr-2"></i> <span data-translate="true" data-i18n="rej_req">Reject Request</span></h3><button onclick="closeModal('modal-reject')" class="text-red-400 hover:text-red-600 transition"><i class="fas fa-times text-lg"></i></button></div>
@@ -114,7 +112,6 @@
     </div>
 </div>
 
-<!-- Modal Photo Action -->
 <div id="modal-action-photo" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[70] flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl flex flex-col max-h-[90vh] animate-slide-up overflow-hidden">
         <div class="bg-slate-800 px-6 py-5 flex justify-between items-center flex-none"><h3 class="font-bold text-white tracking-wide"><i class="fas fa-camera mr-2"></i> <span id="action-photo-title" data-translate="true">Photo Proof</span></h3><button onclick="closeModal('modal-action-photo')" class="text-slate-400 hover:text-white transition"><i class="fas fa-times text-lg"></i></button></div>
@@ -160,7 +157,8 @@
     }
 
     function clearDateFilter() {
-        document.getElementById('filter-date-gi').value = '';
+        document.getElementById('filter-date-start-gi').value = '';
+        document.getElementById('filter-date-end-gi').value = '';
         document.getElementById('date-filter-dropdown').classList.add('hidden');
         filterGI();
     }
@@ -190,24 +188,29 @@
 
     function applyGiFilters() {
         const term = document.getElementById('search-gi').value.toLowerCase();
-        const filterDate = document.getElementById('filter-date-gi').value;
+        const startDate = document.getElementById('filter-date-start-gi').value;
+        const endDate = document.getElementById('filter-date-end-gi').value;
 
         // Atur Indikator Dot Merah pada tombol Filter
-        if (filterDate) document.getElementById('filter-dot').classList.remove('hidden');
+        if (startDate || endDate) document.getElementById('filter-dot').classList.remove('hidden');
         else document.getElementById('filter-dot').classList.add('hidden');
 
         // Pencarian Teks
         let filtered = giData.filter(r => (r.req_id || '').toLowerCase().includes(term) || (r.fullname || '').toLowerCase().includes(term) || (r.department || '').toLowerCase().includes(term) || (r.purpose || '').toLowerCase().includes(term) || (r.status || '').toLowerCase().includes(term) || (r.erp_gi_no || '').toLowerCase().includes(term) );
 
-        // Pencarian Tanggal
-        if (filterDate) {
+        // Pencarian Tanggal (Rentang Waktu)
+        if (startDate || endDate) {
             filtered = filtered.filter(r => {
                 if(!r.created_at) return false;
                 const cleanDt = typeof r.created_at === 'string' ? r.created_at.replace('Z', '') : r.created_at;
                 const d = new Date(cleanDt);
                 if(isNaN(d)) return false;
                 const rDateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-                return rDateStr === filterDate;
+
+                let pass = true;
+                if(startDate && rDateStr < startDate) pass = false;
+                if(endDate && rDateStr > endDate) pass = false;
+                return pass;
             });
         }
 
@@ -269,13 +272,11 @@
             itemsHtmlTable += '</div>'; itemsHtmlCard += '</div>';
 
             let erpHtmlTable = '-'; let erpHtmlCard = '-';
-
             if (r.erp_gi_no) {
                 let editBtn = canEditGiNo ? `<button onclick="editErpGiNo('${r.req_id}', '${r.erp_gi_no}')" class="mt-2.5 w-full sm:w-max bg-white border border-slate-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 px-4 py-2 rounded-xl text-[10px] font-bold shadow-sm transition-all flex items-center justify-center gap-1.5 btn-animated"><i class="fas fa-edit"></i> Edit Nomor</button>` : '';
                 erpHtmlTable = `<div class="flex flex-col items-start"><span class="bg-red-50 text-red-700 font-black px-3 py-1.5 rounded-lg border border-red-200 shadow-sm block w-max">${r.erp_gi_no}</span>${editBtn}</div>`;
                 erpHtmlCard = `<div class="flex flex-col items-end w-full"><span class="bg-red-50 text-red-700 font-black px-3 py-1.5 rounded-lg border border-red-200 shadow-sm text-sm">${r.erp_gi_no}</span>${editBtn}</div>`;
-            }
-            else if (r.status === 'Pending No GI (ERP)') {
+            } else if (r.status === 'Pending No GI (ERP)') {
                 if (isWH) {
                     erpHtmlTable = `<div class="flex flex-col gap-1.5 w-28"><input type="text" id="erp-input-${r.req_id}" class="border border-slate-300 rounded p-1.5 text-[10px] focus:ring-2 focus:ring-red-500 outline-none text-center font-bold text-slate-700" placeholder="Input ERP No"><button onclick="confirmErp('${r.req_id}')" class="bg-emerald-500 text-white px-2 py-1.5 rounded hover:bg-emerald-600 shadow-sm transition text-[10px] font-bold btn-animated"><i class="fas fa-check mr-1"></i> <span data-translate="true">CONFIRM</span></button></div>`;
                     erpHtmlCard = `<div class="flex items-center gap-2"><input type="text" id="erp-input-card-${r.req_id}" class="border border-slate-300 rounded p-1.5 text-[10px] w-24 focus:ring-2 focus:ring-red-500 outline-none text-center font-bold text-slate-700" placeholder="Input ERP No"><button onclick="confirmErpCard('${r.req_id}')" class="bg-emerald-500 text-white px-2.5 py-1.5 rounded hover:bg-emerald-600 shadow-sm transition text-[10px] font-bold"><i class="fas fa-check"></i></button></div>`;
